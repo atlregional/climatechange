@@ -20,10 +20,32 @@
 			margin-right: 8px;
 			opacity: 0.7;
 		    }
+		    .legend-label {
+		    	/*line-height: 20px;*/
+		    }
+		    .info {
+			    padding: 6px 8px;
+			    background: white;
+			    background: rgba(255,255,255,0.8);
+			    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			    border-radius: 5px;
+			}
+			.info h4 {
+			    margin: 0 0 5px;
+			    color: #777;
+			}
+			body {
+	            padding: 0;
+	            margin: 0;
+	        }
+	        html, body, #map {
+	            height: 100%;
+	            width: 100%;
+	        }
 	</style>
 </head>
 <body>
-	<div id="map" style="width: 100%; height: 900px"></div>
+	<div id="map"></div>
 
 	<script src="http://leafletjs.com/dist/leaflet.js"></script>
 	<script>
@@ -101,21 +123,33 @@
 		
 		    var div = L.DomUtil.create('div', 'info legend'),
 			grades = [],
+			title = '',
 			labels = [];
 			if (type=='Residential Emissions') {
 				grades = [26300,33689,38000,45393,58077];
+				title = 'Annual Residential Metric Tons of CO2 per Household';
 			}
 			else if (type=='Transportation Emissions') {
 				grades = [0,3874,6321,10157,16173];
+				title = 'Annual Automobile Metric Tons of CO2 per Household';
 			}
 			else if (type=='Total Emissions') {
 				grades = [27800,36962,43051,52177,65858];
+				title = 'Total Annual Metric Tons of CO2 per Household';
 			}
+			div.innerHTML += '<h3>'+title+'</h3>'
 			// loop through our density intervals and generate a label with a colored square for each interval
 			for (var i = 0; i < grades.length; i++) {
-			    div.innerHTML +=
-				'<i style="background:' + getColor(grades[i] + 1, type) + '"></i> ' +
-				grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+				if (i == 0){
+					div.innerHTML +=
+					'<i style="background:' + getColor(grades[i] + 1, type) + '"></i> < ' +
+					grades[i] + '<br>';
+				}
+				else{
+				    div.innerHTML +=
+					'<i style="background:' + getColor(grades[i] + 1, type) + '"></i><span class="legend-label">' +
+					grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '</span><br>' : '+');
+				}
 			}
 		    
 			return div;
