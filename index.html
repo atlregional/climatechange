@@ -140,10 +140,10 @@
 			div.innerHTML += '<h3>'+title+'</h3>'
 			// loop through our density intervals and generate a label with a colored square for each interval
 			for (var i = 0; i < grades.length; i++) {
-				if (i == 0){
+				if (grades[i] == 0){
 					div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1, type) + '"></i> < ' +
-					grades[i] + '<br>';
+					grades[i+1] + '<br>';
 				}
 				else{
 				    div.innerHTML +=
