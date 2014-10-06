@@ -51,29 +51,29 @@
 	<script>
 
 		function getColor(d, type) {
-			if (type=='Residential Emissions') {
-				return d > 58077 ? '#A63F4D' :
-			       d > 45393  ? '#ED9761' :
-			       d > 38000  ? '#386D82' :
-			       d > 33689  ? '#4D9974' :
-			       d > 0   ? '#82AD31' :
-					  '#FFEDA0';
-			}
-			else if (type=='Transportation Emissions') {
-				return d > 16173 ? '#A63F4D' :
-			       d > 10157  ? '#ED9761' :
-			       d > 6321  ? '#386D82' :
-			       d > 3874  ? '#4D9974' :
-			       d > 0   ? '#82AD31' :
-					  '#FFEDA0';
-			}
-			else if (type=='Total Emissions') {
-				return d > 65858 ? '#A63F4D' :
-			       d > 52177  ? '#ED9761' :
-			       d > 43051  ? '#386D82' :
-			       d > 36962  ? '#4D9974' :
-			       d > 0   ? '#82AD31' :
-					  '#FFEDA0';
+            if (type=='Residential Emissions') {
+                            return d > 58.077 ? '#A63F4D' :
+                   d > 45.393  ? '#ED9761' :
+                   d > 38  ? '#386D82' :
+                   d > 33.689  ? '#4D9974' :
+                   d > 0   ? '#82AD31' :
+                                              '#FFEDA0';
+            }
+            else if (type=='Transportation Emissions') {
+                            return d > 16.173 ? '#A63F4D' :
+                   d > 10.157  ? '#ED9761' :
+                   d > 6.321  ? '#386D82' :
+                   d > 3.874  ? '#4D9974' :
+                   d > 0   ? '#82AD31' :
+                                              '#FFEDA0';
+            }
+            else if (type=='Total Emissions') {
+                            return d > 65.858 ? '#A63F4D' :
+                   d > 52.177  ? '#ED9761' :
+                   d > 43.051  ? '#386D82' :
+                   d > 36.962  ? '#4D9974' :
+                   d > 0   ? '#82AD31' :
+                                              '#FFEDA0';
 			}
 			
 		    }
@@ -126,17 +126,17 @@
 			title = '',
 			labels = [];
 			if (type=='Residential Emissions') {
-				grades = [26300,33689,38000,45393,58077];
-				title = 'Annual Residential Metric Tons of CO2 per Household';
-			}
-			else if (type=='Transportation Emissions') {
-				grades = [0,3874,6321,10157,16173];
-				title = 'Annual Automobile Metric Tons of CO2 per Household';
-			}
-			else if (type=='Total Emissions') {
-				grades = [27800,36962,43051,52177,65858];
-				title = 'Total Annual Metric Tons of CO2 per Household';
-			}
+                grades = [26.3,33.7,38.0,45.4,58.1];
+                title = 'Annual Residential Metric Tons of CO2 per Household';
+            }
+            else if (type=='Transportation Emissions') {
+                grades = [0,3.9,6.3,10.2,16.2];
+                title = 'Annual Automobile Metric Tons of CO2 per Household';
+            }
+            else if (type=='Total Emissions') {
+                grades = [27.8,36.9,43.1,52.2,65.9];
+                title = 'Total Annual Metric Tons of CO2 per Household';
+            }
 			div.innerHTML += '<h3>'+title+'</h3>'
 			// loop through our density intervals and generate a label with a colored square for each interval
 			for (var i = 0; i < grades.length; i++) {
