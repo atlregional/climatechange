@@ -126,20 +126,20 @@
 			title = '',
 			labels = [];
 			if (type=='Residential Emissions') {
-                grades = [26.3,33.7,38.0,45.4,58.1];
+                grades = [26.3,33.7,38.0,45.4,58.1,79.8];
                 title = 'Annual Residential Metric Tons of CO2 per Household';
             }
             else if (type=='Transportation Emissions') {
-                grades = [0,3.9,6.3,10.2,16.2];
+                grades = [0,3.9,6.3,10.2,16.2,25.6];
                 title = 'Annual Automobile Metric Tons of CO2 per Household';
             }
             else if (type=='Total Emissions') {
-                grades = [27.8,36.9,43.1,52.2,65.9];
+                grades = [27.8,36.9,43.1,52.2,65.9,86.4];
                 title = 'Total Annual Metric Tons of CO2 per Household';
             }
 			div.innerHTML += '<h3>'+title+'</h3>'
 			// loop through our density intervals and generate a label with a colored square for each interval
-			for (var i = 0; i < grades.length; i++) {
+			for (var i = 0; i < grades.length - 1; i++) {
 				if (grades[i] == 0){
 					div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1, type) + '"></i> < ' +
@@ -148,7 +148,7 @@
 				else{
 				    div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1, type) + '"></i><span class="legend-label">' +
-					grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '</span><br>' : '+');
+					grades[i] + (i + 1 !== grades.length ? '&ndash;' + grades[i + 1] + '</span><br>' : '&ndash;' + grades[i + 1] + '</span>');
 				}
 			}
 		    
