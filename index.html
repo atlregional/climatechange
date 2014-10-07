@@ -6,8 +6,9 @@
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<style>
 		.legend {
 			line-height: 18px;
@@ -42,14 +43,57 @@
 	            height: 100%;
 	            width: 100%;
 	        }
+	        #panel {
+	        	/*opacity:.6;*/
+	        	/*margin: 6px 8px;*/
+	        	position: fixed;
+	        	background-color:white;
+	        	z-index: 1000;
+	        	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			    border-radius: 5px;
+
+	        }
+	        .switches {
+	        	margin-top:15px;
+			    text-align: center;
+			    width: inherit;
+			    display: inline-block;
+	        	
+	        }
+/*class="col-md-12 col-sm-12 col-xs-12"*/
 	</style>
 </head>
 <body>
+	<div id="panel" class="col-md-3 col-sm-4 col-md-offset-9 col-sm-offset-8 col-xs-12">
+		<div class="text-center">
+			<div class="switches btn-group" data-toggle="buttons">
+				<label checked type="button" id="transpo" class=" layer-switch btn active btn-default" title="Transportation Emissions">
+				<input type="radio" checked><i class="fa fa-car"></i></label>
+				<label type="button" id="res" class=" layer-switch btn  btn-default" title="Residential Emissions">
+				<input type="radio"><i class="fa fa-building"></i></label>
+				<label type="button" id="total" class=" layer-switch btn  btn-default" title="Total Emissions">
+				<input type="radio"><i class="fa fa-car"></i> + <i class="fa fa-building"></i></label>
+				
+			</div>
+			<h3 id="message"></h3>
+		</div>
+	</div>
 	<div id="map"></div>
 
 	<script src="http://leafletjs.com/dist/leaflet.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/button.js"></script>
 	<script>
-
+	$('.btn').button()
+	$('.layer-switch').click(function(){
+		// $(this).addClass('active');
+		console.log(this.title);
+		map.removeLayer(baseLayers[currentLayer]);
+		map.addLayer(baseLayers[this.title]);
+		addLegend(this.title)
+		// window.setTimeout(function(){map.removeLayer(baseLayers[currentLayer]);},200);
+		currentLayer = this.title;
+	})
 		function getColor(d, type) {
             if (type=='Residential Emissions') {
                             return d > 58.077 ? '#A63F4D' :
@@ -88,35 +132,38 @@
 		    res  = L.tileLayer(mbUrl, {id: 'atlregional.fr3075eg',   attribution: mbAttr}),
 		    total  = L.tileLayer(mbUrl, {id: 'atlregional.ghgtotal',   attribution: mbAttr});
 
-		var map = L.map('map', {
-			center: [33.738147,-84.3728762],
-			zoom: 9,
-			layers: [transpo]
-		});
+		var currentLayer = "Transportation Emissions";
+		// $('#transpo').addClass('active');
 
 		var baseLayers = {
 			"Transportation Emissions": transpo,
 			"Residential Emissions": res,
 			"Total Emissions": total
 		};
-
+		var map = L.map('map', {
+			center: [33.89435731090067,-84.37637329101562],
+			zoom: 9,
+			layers: [baseLayers[currentLayer]],
+			zoomControl: false
+		});
+		new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 		var overlays = {
 			
 		};
 		var legend;
 		addLegend('Transportation Emissions')
-		L.control.layers(baseLayers).addTo(map);
+		// L.control.layers(baseLayers).addTo(map);
 		map.on('baselayerchange', baseLayerChange);
 		
 		function baseLayerChange(e){
 		    console.log(e);
-		    addLegend(e.name)
+		    addLegend(e.name);
 		}
 		function addLegend(type){
 			if (typeof legend !== 'undefined') {
 				map.removeControl(legend);
 			}
-			
+			$('#message').html(type)
 			legend = L.control({position: 'bottomright'});
 
 			legend.onAdd = function (map) {
@@ -137,7 +184,7 @@
                 grades = [27.8,36.9,43.1,52.2,65.9,86.4];
                 title = 'Total Annual Metric Tons of CO<sub>2</sub> per Household';
             }
-			div.innerHTML += '<h3>'+title+'</h3>'
+			div.innerHTML += '<h4>'+title+'</h4>'
 			// loop through our density intervals and generate a label with a colored square for each interval
 			for (var i = 0; i < grades.length - 1; i++) {
 				if (grades[i] == 0){
