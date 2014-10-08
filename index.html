@@ -86,12 +86,24 @@
 	<script>
 	$('.btn').button()
 	$('.layer-switch').click(function(){
-		// $(this).addClass('active');
 		console.log(this.title);
-		map.removeLayer(baseLayers[currentLayer]);
-		map.addLayer(baseLayers[this.title]);
+		if(currentLayer !== 'Transportation Emissions'){
+			if (this.title == 'Transportation Emissions'){
+				map.removeLayer(baseLayers['Residential Emissions']);
+				map.removeLayer(baseLayers['Total Emissions'])
+			}
+			else if (Object.keys(map._layers).length == 3){
+				map.removeLayer(baseLayers[currentLayer]);
+			}
+		}
+		if((currentLayer == 'Residential Emissions' && this.title == 'Total Emissions')){
+			map.addLayer(baseLayers[this.title]);
+		}
+		else if(this.title !== 'Transportation Emissions'){
+			map.addLayer(baseLayers[this.title]);
+		}
+
 		addLegend(this.title)
-		// window.setTimeout(function(){map.removeLayer(baseLayers[currentLayer]);},200);
 		currentLayer = this.title;
 	})
 		function getColor(d, type) {
