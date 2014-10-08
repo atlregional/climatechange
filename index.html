@@ -144,7 +144,9 @@
 			center: [33.89435731090067,-84.37637329101562],
 			zoom: 9,
 			layers: [baseLayers[currentLayer]],
-			zoomControl: false
+			zoomControl: false,
+			minZoom: 9,
+			maxBounds: L.latLngBounds([33.116849834921005, -86.0394287109375], [34.55407346090556, -82.5238037109375])
 		});
 		new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 		var overlays = {
