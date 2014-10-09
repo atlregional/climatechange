@@ -84,6 +84,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/button.js"></script>
 	<script>
+	if(!console) {console={}; console.log = function(){};}
 	$('.btn').button()
 	$('.layer-switch').click(function(){
 		console.log(this.title);
@@ -158,7 +159,7 @@
 			layers: [baseLayers[currentLayer]],
 			zoomControl: false,
 			minZoom: 9,
-			maxBounds: L.latLngBounds([33.116849834921005, -86.0394287109375], [34.55407346090556, -82.5238037109375])
+			maxBounds: L.latLngBounds([32.8, -86.2], [34.7, -82.4])
 		});
 		new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 		var overlays = {
