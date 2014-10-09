@@ -84,10 +84,10 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/button.js"></script>
 	<script>
-	if(!console) {console={}; console.log = function(){};}
+	// if(!console) {console={}; console.log = function(){};}
 	$('.btn').button()
 	$('.layer-switch').click(function(){
-		console.log(this.title);
+		// console.log(this.title);
 		if(currentLayer !== 'Transportation Emissions'){
 			if (this.title == 'Transportation Emissions'){
 				map.removeLayer(baseLayers['Residential Emissions']);
